@@ -428,13 +428,9 @@ nnoremap <leader>- :MaximizerToggle<CR>
 let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_map = '<nop>'
 let g:ctrlp_tilde_homedir = 1
-let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-let g:ctrlp_max_depth = 40
-let g:ctrlp_max_files = 99999
 let g:ctrlp_extensions = ['funky']
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  'node_modules\|DS_Store\|git\|vendor\|_book',
+            \ 'dir':  'node_modules\|DS_Store\|vendor\|_book',
             \ 'file': '\v\.(log|so|pyc)$',
             \ }
 nnoremap <C-@> :CtrlPMixed<CR>
