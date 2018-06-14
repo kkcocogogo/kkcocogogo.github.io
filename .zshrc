@@ -111,6 +111,8 @@ alias ssh='TERM=xterm ssh'
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+eval "$(direnv hook zsh)"
+
 #Disable autocorrect
 unsetopt correct_all
 unsetopt correct

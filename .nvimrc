@@ -402,7 +402,7 @@ let g:neomake_place_signs=0
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_python_flake8_maker = {
             \ 'args': ['--ignore', 'E501,E225,E203']}
-let g:neomake_go_gometalinter_args = ['--fast', '--deadline=360', '--vendor', '--enable-gc', '--exclude="should have comment or be unexported"']
+let g:neomake_go_gometalinter_args = ['--deadline=360', '--vendor', '--enable-gc', '--exclude="should have comment or be unexported"']
 
 " identation {
 set showtabline=0
