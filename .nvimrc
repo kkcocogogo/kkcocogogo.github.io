@@ -119,21 +119,18 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 
 " special file type handler {
 
+" html / csv
 Plug 'valloric/matchtagalways'
 Plug 'mattn/emmet-vim'
-
-" go
-Plug 'fatih/vim-go'
-
-" highlight csv files
 Plug 'chrisbra/csv.vim'
 
+Plug 'fatih/vim-go'
+
+" better python folding
 Plug 'tmhedberg/SimpylFold'
 
-" A solid language pack for Vim.
+" filetypes not handled above will be handled by polyglot
 Plug 'sheerun/vim-polyglot'
-" for reStructured Text
-Plug 'gu-fan/riv.vim'
 
 " }
 
