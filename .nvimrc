@@ -205,7 +205,7 @@ set backspace=indent,eol,start
 " vim user interface {
 highlight NonText ctermfg=0
 set termencoding=utf-8
-set fillchars-=vert:\|
+set fillchars=eob:\ ,vert:\ 
 " Open new split panes to right and bottom, which feels more natural than
 " Vim’s default
 set splitbelow
