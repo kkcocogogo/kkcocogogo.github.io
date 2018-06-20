@@ -28,7 +28,6 @@ source ~/antigen.zsh
 export BULLETTRAIN_STATUS_EXIT_SHOW=true
 export BULLETTRAIN_PROMPT_ORDER=(
 time
-cmd_exec_time
 status
 proxy
 custom

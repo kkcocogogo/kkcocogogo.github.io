@@ -65,6 +65,11 @@ Plug 'ntpeters/vim-better-whitespace'
 " edit code snippet in a separate buffer
 Plug 'chrisbra/NrrwRgn'
 
+" deoplete and its friends
+Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }
 Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' }
@@ -183,6 +188,9 @@ cmap w!! w !sudo tee % >/dev/null
 set inccommand=split
 set gdefault
 set foldnestmax=1
+" hate it when vim auto fold something for me, I'll decide when to fold and
+" unfold, motherfucker
+set nofoldenable
 set clipboard=unnamed
 set autoread
 set lazyredraw
@@ -263,6 +271,12 @@ let g:snips_author = 'timfeirg'
 let g:snips_github = 'https://github.com/timfeirg/'
 " }
 
+" LanguageClient {
+let g:LanguageClient_serverCommands = {
+            \ 'vue': ['vls'],
+            \ }
+" }
+
 " deoplete {
 let g:deoplete#enable_at_startup = 1
 if !exists('g:deoplete#omni#input_patterns')
@@ -279,10 +293,12 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+" see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
             \ '_': ['buffer', 'ultisnips'],
             \ 'python': ['ultisnips', 'jedi', 'buffer'],
             \ 'go': ['ultisnips', 'go', 'buffer'],
+            \ 'vue': ['ultisnips', 'go', 'LanguageClient'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
