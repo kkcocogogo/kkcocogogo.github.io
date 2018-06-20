@@ -271,10 +271,14 @@ let g:snips_author = 'timfeirg'
 let g:snips_github = 'https://github.com/timfeirg/'
 " }
 
-" LanguageClient {
+" neovim-LanguageClient {
 let g:LanguageClient_serverCommands = {
             \ 'vue': ['vls'],
             \ }
+" disable ale messages
+" I just don't want any realtime lint support on my code, if I want any
+" advice from linters, I'll :w and see them on neomake quickfix window
+set signcolumn=no
 " }
 
 " deoplete {
