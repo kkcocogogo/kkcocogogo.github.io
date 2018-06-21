@@ -459,6 +459,7 @@ let g:ctrlp_yankring_limit = 100
 nnoremap <leader>p :CtrlPYankring<CR>
 " }
 " funky {
+let g:ctrlp_funky_use_cache = 1
 " after jump, move code to the center and open fold recursively
 let g:ctrlp_funky_after_jump = 'zOzt'
 let g:ctrlp_funky_nerdtree_include_files = 1
