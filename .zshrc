@@ -63,10 +63,8 @@ DEFAULT_USER=timfeirg
 DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 # env
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"
 export GOPATH=$HOME/gocode
-export PATH=$PATH:$GOPATH/bin
-export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"
 if ! type nvim > /dev/null; then
   export EDITOR=vim
   alias v='f -e vim'
@@ -107,7 +105,7 @@ alias vi=$EDITOR
 alias ssh='TERM=xterm ssh'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules,vendor}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(direnv hook zsh)"
@@ -122,7 +120,6 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # add all ssh keys
 if which keychain > /dev/null; then eval `keychain -q --eval --agents ssh --inherit any id_bitbucket id_github id_gitlab id_japanapi id_sa_ricebook`; fi
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # if [[ "$PROFILE_STARTUP" == true ]]; then
 #   zprof

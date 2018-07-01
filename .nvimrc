@@ -12,7 +12,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " code navigation and project navigation {
-Plug 'danro/rename.vim'
+Plug 'jez/vim-superman'
 
 " file tree, for preview rather than navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'  }
@@ -46,6 +46,8 @@ Plug 'terryma/vim-multiple-cursors'
 
 " git integration, :Gvdiff command is extremely useful
 Plug 'tpope/vim-fugitive'
+" Enables :Gbrowse from fugitive.vim to open GitHub URLs.
+Plug 'tpope/vim-rhubarb'
 " unix helpers like SudoEdit, Delete
 Plug 'tpope/vim-eunuch'
 
@@ -53,7 +55,10 @@ Plug 'tpope/vim-eunuch'
 
 " code edting helper plugin {
 
-" aligns code
+" A (Neo)vim plugin for formatting code
+Plug 'sbdchd/neoformat'
+
+" align code
 Plug 'godlygeek/tabular'
 
 " sql format
@@ -237,6 +242,7 @@ autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 
+autocmd FileType man setlocal nonumber wrap
 autocmd FileType python setlocal nonumber nowrap
 autocmd FileType json setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vue setlocal expandtab shiftwidth=2 softtabstop=2
