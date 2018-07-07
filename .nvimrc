@@ -80,6 +80,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 
@@ -175,6 +176,8 @@ nnoremap ; :
 vnoremap ; :
 nmap j gj
 nmap k gk
+" change after current character
+nmap ca lC
 " de-highlight when redraw
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Don't lose selection when shifting sidewards
@@ -267,6 +270,10 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev Ack Ack!
 " }
 
+" golden-ratio {
+" let g:golden_ratio_exclude_nonmodifiable = 1
+" }
+
 " ultisnips {
 let g:UltiSnipsExpandTrigger = "<C-l>"
 " }
@@ -327,6 +334,25 @@ let g:jedi#smart_auto_mappings = 1
 let g:jedi#documentation_command = 'K'
 let g:jedi#auto_close_doc = 1
 let g:jedi#use_splits_not_buffers = 'winwidth'
+" }
+
+" pymode python-mode {
+" pymode is useless except for the rope features, so I disabled everything
+let g:pymode_rope = 1
+let g:pymode_folding = 0
+let g:pymode_rope_goto_definition_bind = '<nop>'
+let g:pymode_rope_ropefolder = '../.ropeproject'
+let g:pymode_rope_completion = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_autoimport_import_after_complete = 1
+
+let g:pymode_lint = 0
+let g:pymode_run = 0
+let g:pymode_options_colorcolumn = 0
+
+let g:pymode_python = 'python3'
+let g:pymode_syntax = 0
+let g:pymode_virtualenv = 1
 " }
 
 " vim-go {
