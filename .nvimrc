@@ -287,11 +287,15 @@ let g:snips_github = 'https://github.com/timfeirg/'
 " neovim-LanguageClient {
 let g:LanguageClient_serverCommands = {
             \ 'vue': ['vls'],
+            \ 'go': ['go-langserver'],
+            \ 'sh': ['bash-language-server', 'start']
             \ }
 " disable ale messages
 " I just don't want any realtime lint support on my code, if I want any
 " advice from linters, I'll :w and see them on neomake quickfix window
 set signcolumn=no
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 " }
 
 " deoplete {
@@ -315,7 +319,8 @@ call deoplete#custom#option('sources', {
             \ '_': ['buffer', 'ultisnips'],
             \ 'python': ['ultisnips', 'jedi', 'buffer'],
             \ 'go': ['ultisnips', 'go', 'buffer'],
-            \ 'vue': ['ultisnips', 'go', 'LanguageClient'],
+            \ 'vue': ['ultisnips', 'go', 'LanguageClient', 'buffer'],
+            \ 'sh': ['ultisnips', 'buffer', 'LanguageClient'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
@@ -359,6 +364,7 @@ let g:pymode_virtualenv = 1
 autocmd FileType go set foldmethod=syntax
 autocmd FileType go nnoremap <C-c>g :<C-u>call go#def#Jump("vsplit")<CR>
 autocmd FileType go nnoremap <C-c>rr :GoRename<CR>
+let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_array_whitespace_error = 1
 let g:go_highlight_chan_whitespace_error = 1
 let g:go_highlight_extra_types = 1
