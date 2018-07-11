@@ -8,3 +8,4 @@ neovim
 pip
 mycli
 watchdog
+python-language-server[all]

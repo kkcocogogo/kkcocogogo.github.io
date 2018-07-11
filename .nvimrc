@@ -12,6 +12,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " code navigation and project navigation {
+
+" read man pages in vim
 Plug 'jez/vim-superman'
 
 " file tree, for preview rather than navigation
@@ -28,6 +30,7 @@ Plug 'ompugao/ctrlp-history'
 
 " split pane navigation
 Plug 't9md/vim-choosewin'
+" resize split pane properly
 Plug 'roman/golden-ratio'
 Plug 'szw/vim-maximizer'
 
@@ -77,7 +80,6 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ }
 Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
@@ -287,6 +289,7 @@ let g:snips_github = 'https://github.com/timfeirg/'
 " neovim-LanguageClient {
 let g:LanguageClient_serverCommands = {
             \ 'vue': ['vls'],
+            \ 'python': ['pyls'],
             \ 'go': ['go-langserver'],
             \ 'sh': ['bash-language-server', 'start']
             \ }
@@ -295,7 +298,7 @@ let g:LanguageClient_serverCommands = {
 " advice from linters, I'll :w and see them on neomake quickfix window
 set signcolumn=no
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>:bpr<Cr>:vsplit<Cr>:bn<Cr>
 " }
 
 " deoplete {
@@ -308,7 +311,6 @@ function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"
 endfunction
 let g:deoplete#enable_smart_case = 1
-let g:deoplete#sources#jedi#show_docstring = 1
 " use tab / shift-tab to cycle through candidates
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
@@ -317,9 +319,9 @@ call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
             \ '_': ['buffer', 'ultisnips'],
-            \ 'python': ['ultisnips', 'jedi', 'buffer'],
+            \ 'python': ['ultisnips', 'LanguageClient', 'buffer'],
             \ 'go': ['ultisnips', 'go', 'buffer'],
-            \ 'vue': ['ultisnips', 'go', 'LanguageClient', 'buffer'],
+            \ 'vue': ['ultisnips', 'LanguageClient', 'buffer'],
             \ 'sh': ['ultisnips', 'buffer', 'LanguageClient'],
             \})
 " automatically close the scratch window
@@ -362,7 +364,6 @@ let g:pymode_virtualenv = 1
 
 " vim-go {
 autocmd FileType go set foldmethod=syntax
-autocmd FileType go nnoremap <C-c>g :<C-u>call go#def#Jump("vsplit")<CR>
 autocmd FileType go nnoremap <C-c>rr :GoRename<CR>
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_array_whitespace_error = 1
