@@ -179,7 +179,8 @@ vnoremap ; :
 nmap j gj
 nmap k gk
 " change after current character
-nmap ca lC
+noremap ca lC
+noremap da lD
 " de-highlight when redraw
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Don't lose selection when shifting sidewards
