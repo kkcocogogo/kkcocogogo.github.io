@@ -178,9 +178,6 @@ nnoremap ; :
 vnoremap ; :
 nmap j gj
 nmap k gk
-" change after current character
-noremap ca lC
-noremap da lD
 " de-highlight when redraw
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Don't lose selection when shifting sidewards
@@ -289,6 +286,7 @@ let g:snips_github = 'https://github.com/timfeirg/'
 
 " neovim-LanguageClient {
 let g:LanguageClient_serverCommands = {
+            \ 'lua': ['lua-lsp'],
             \ 'vue': ['vls'],
             \ 'python': ['pyls'],
             \ 'go': ['go-langserver'],
@@ -299,7 +297,8 @@ let g:LanguageClient_serverCommands = {
 " advice from linters, I'll :w and see them on neomake quickfix window
 set signcolumn=no
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>:bpr<Cr>:vsplit<Cr>:bn<Cr>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
+nnoremap <silent> <C-c>rr :call LanguageClient#textDocument_rename()<CR>
 " }
 
 " deoplete {
@@ -366,6 +365,7 @@ let g:pymode_virtualenv = 1
 " vim-go {
 autocmd FileType go set foldmethod=syntax
 autocmd FileType go nnoremap <C-c>rr :GoRename<CR>
+let g:go_def_mapping_enabled = 0
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_array_whitespace_error = 1
 let g:go_highlight_chan_whitespace_error = 1
