@@ -323,6 +323,7 @@ call deoplete#custom#option('sources', {
             \ 'go': ['ultisnips', 'go', 'buffer'],
             \ 'vue': ['ultisnips', 'LanguageClient', 'buffer'],
             \ 'sh': ['ultisnips', 'buffer', 'LanguageClient'],
+            \ 'lua': ['ultisnips', 'buffer', 'LanguageClient'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
