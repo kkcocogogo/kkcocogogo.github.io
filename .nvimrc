@@ -290,7 +290,8 @@ let g:LanguageClient_serverCommands = {
             \ 'vue': ['vls'],
             \ 'python': ['pyls'],
             \ 'go': ['go-langserver'],
-            \ 'sh': ['bash-language-server', 'start']
+            \ 'sh': ['bash-language-server', 'start'],
+            \ 'dockerfile': ['docker-langserver', '--stdio'],
             \ }
 " disable ale messages
 " I just don't want any realtime lint support on my code, if I want any
@@ -324,6 +325,7 @@ call deoplete#custom#option('sources', {
             \ 'vue': ['ultisnips', 'LanguageClient', 'buffer'],
             \ 'sh': ['ultisnips', 'buffer', 'LanguageClient'],
             \ 'lua': ['ultisnips', 'buffer', 'LanguageClient'],
+            \ 'dockerfile': ['ultisnips', 'buffer', 'LanguageClient'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/

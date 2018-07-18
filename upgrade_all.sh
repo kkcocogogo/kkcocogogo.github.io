@@ -11,7 +11,7 @@ go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 go get -u github.com/golang/dep/cmd/dep
 go get -u golang.org/x/tools/...
 go get -u github.com/sourcegraph/go-langserver
-cnpm update -g eslint eslint-plugin-vue npm wscat tern vue-language-server bash-language-server
+cnpm update -g eslint eslint-plugin-vue npm wscat tern vue-language-server bash-language-server dockerfile-language-server-nodejs
 luarocks install --server=http://luarocks.org/dev lua-lsp
 luarocks install luacheck
 luarocks-5.1 install Formatter
