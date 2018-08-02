@@ -16,10 +16,9 @@ export DISABLE_AUTO_UPDATE="true"
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
 git-extras gitfast
-pip
 golang
 fasd brew redis-cli ssh-agent mosh docker httpie
-virtualenv virtualenvwrapper
+pip virtualenv virtualenvwrapper pyenv
 helm
 )
 source $ZSH/oh-my-zsh.sh
@@ -64,7 +63,7 @@ DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 # env
 export GOPATH=$HOME/gocode
-export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"
+export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.local/share/virtualenvs/.lainenv-VkW5oxrl/bin"
 if ! type nvim > /dev/null; then
   export EDITOR=vim
   alias v='f -e vim'
@@ -109,6 +108,8 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(direnv hook zsh)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 #Disable autocorrect
 unsetopt correct_all

@@ -78,7 +78,7 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ 'branch': 'next',
             \ 'do': 'bash install.sh',
             \ }
-Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
+" Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
@@ -242,6 +242,7 @@ autocmd FileType cfg set filetype=conf
 autocmd BufRead,BufNewFile *.conf setf dosini
 autocmd BufRead,BufNewFile *.geojson set filetype=json
 autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
+autocmd BufRead,BufNewFile .envrc set filetype=sh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 
@@ -315,7 +316,7 @@ let g:deoplete#enable_smart_case = 1
 " use tab / shift-tab to cycle through candidates
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
+" call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
