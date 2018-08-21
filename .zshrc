@@ -13,6 +13,7 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export DISABLE_AUTO_UPDATE="true"
+export HOMEBREW_NO_AUTO_UPDATE=1
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
 git-extras gitfast
@@ -63,7 +64,7 @@ DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 # env
 export GOPATH=$HOME/gocode
-export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.local/share/virtualenvs/.lainenv-VkW5oxrl/bin"
+export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.virtualenvs/ein/bin"
 if ! type nvim > /dev/null; then
   export EDITOR=vim
   alias v='f -e vim'
@@ -104,7 +105,7 @@ alias vi=$EDITOR
 alias ssh='TERM=xterm ssh'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules,vendor}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git,node_modules,vendor,*.pyc}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(direnv hook zsh)"

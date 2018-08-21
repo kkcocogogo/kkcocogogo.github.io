@@ -9,3 +9,5 @@ pip
 mycli
 watchdog
 python-language-server[all]
+virtualenv
+virtualenvwrapper

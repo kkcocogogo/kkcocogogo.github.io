@@ -80,9 +80,11 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ }
 " Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/context_filetype.vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'raimon49/requirements.txt.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 
@@ -239,7 +241,8 @@ highlight Comment cterm=italic
 set nowrap
 
 autocmd FileType cfg set filetype=conf
-autocmd BufRead,BufNewFile *.conf setf dosini
+autocmd BufRead,BufNewFile *.conf set filetype=dosini
+autocmd BufRead,BufNewFile pip-req.txt set filetype=requirements
 autocmd BufRead,BufNewFile *.geojson set filetype=json
 autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile .envrc set filetype=sh
@@ -248,6 +251,7 @@ autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 
 autocmd FileType man setlocal nonumber wrap
 autocmd FileType python setlocal nonumber nowrap
+autocmd FileType Jenkinsfile setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType json setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vue setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType html setlocal expandtab shiftwidth=2 softtabstop=2
@@ -272,7 +276,7 @@ cnoreabbrev Ack Ack!
 " }
 
 " golden-ratio {
-" let g:golden_ratio_exclude_nonmodifiable = 1
+let g:golden_ratio_exclude_nonmodifiable = 1
 " }
 
 " ultisnips {
@@ -318,6 +322,8 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 " call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+call deoplete#custom#option('smart_case', v:true)
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
             \ '_': ['buffer', 'ultisnips'],
@@ -462,7 +468,7 @@ let g:neomake_list_height=3
 let g:neomake_place_signs=0
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_python_flake8_maker = {
-            \ 'args': ['--ignore', 'E501,E225,E203']}
+            \ 'args': ['--ignore', 'E501,E225,E203,F811']}
 let g:neomake_go_gometalinter_args = ['--deadline=360', '--vendor', '--enable-gc', '--exclude="should have comment or be unexported"']
 
 " identation {
