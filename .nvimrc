@@ -115,7 +115,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'dhruvasagar/vim-table-mode'
 
 " async syntax checker
-Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
 
 " }
 
@@ -299,9 +299,6 @@ let g:LanguageClient_serverCommands = {
             \ 'sh': ['bash-language-server', 'start'],
             \ 'dockerfile': ['docker-langserver', '--stdio'],
             \ }
-" disable ale messages
-" I just don't want any realtime lint support on my code, if I want any
-" advice from linters, I'll :w and see them on neomake quickfix window
 set signcolumn=no
 let g:LanguageClient_diagnosticsList = "Disabled"
 let g:LanguageClient_diagnosticsList = "Disabled"
@@ -361,6 +358,7 @@ let g:jedi#use_splits_not_buffers = 'winwidth'
 let g:pymode_rope = 1
 let g:pymode_folding = 0
 let g:pymode_rope_goto_definition_bind = '<nop>'
+let g:pymode_rope_organize_imports_bind = '<nop>'
 let g:pymode_rope_ropefolder = '../.ropeproject'
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
@@ -374,8 +372,8 @@ let g:pymode_virtualenv = 1
 " }
 
 " isort {
-let g:vim_isort_map = '<C-c>ro'
 let g:vim_isort_python_version = 'python3'
+noremap <silent> <C-c>ro :call pymode#rope#organize_imports()<CR>:Isort<CR>
 " }
 
 " vim-go {
@@ -467,20 +465,36 @@ let g:table_mode_corner_corner = '-'
 let g:table_mode_corner = '-'
 " }
 
-" neomake {
-call neomake#configure#automake('w')
-let g:neomake_open_list=2
-let g:neomake_list_height=3
-let g:neomake_place_signs=0
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_python_flake8_maker = {
-            \ 'args': ['--ignore', 'E501,E225,E203,E702,F811']}
-let g:neomake_go_gometalinter_args = ['--deadline=360', '--vendor', '--enable-gc', '--exclude="should have comment or be unexported"']
+" ale {
+let g:ale_open_list = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 1
+let g:ale_echo_msg_format = '%linter%:%code% %s [%severity%]'
+let g:ale_loclist_msg_format = '%linter%:%code% %s [%severity%]'
+let g:ale_linters = {
+            \ 'go': ['gometalinter'],
+            \ 'python': ['flake8']
+            \ }
+let g:ale_fixers = {
+            \ 'python': ['yapf'],
+            \ 'rust': ['rustfmt'],
+            \ 'javascript': ['prettier', 'eslint']
+            \ }
+let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
+            \ --exclude="should have comment"
+            \ --exclude="should be of the form"
+            \ --exclude="Errors unhandled"
+            \ --exclude="weak cryptographic"
+            \ --exclude="weak random"'
+let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811'
+autocmd BufEnter ControlP let b:ale_enabled = 0
+" }
 
 " identation {
 set showtabline=0
 set autoindent
-" set nosmartindent
 set showmatch
 set linebreak
 set nolist
