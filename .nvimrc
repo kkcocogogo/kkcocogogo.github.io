@@ -84,6 +84,7 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'fisadev/vim-isort'
 Plug 'raimon49/requirements.txt.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
@@ -302,6 +303,8 @@ let g:LanguageClient_serverCommands = {
 " I just don't want any realtime lint support on my code, if I want any
 " advice from linters, I'll :w and see them on neomake quickfix window
 set signcolumn=no
+let g:LanguageClient_diagnosticsList = "Disabled"
+let g:LanguageClient_diagnosticsList = "Disabled"
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
 nnoremap <silent> <C-c>rr :call LanguageClient#textDocument_rename()<CR>
@@ -362,14 +365,17 @@ let g:pymode_rope_ropefolder = '../.ropeproject'
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_autoimport_import_after_complete = 1
-
 let g:pymode_lint = 0
 let g:pymode_run = 0
 let g:pymode_options_colorcolumn = 0
-
 let g:pymode_python = 'python3'
 let g:pymode_syntax = 0
 let g:pymode_virtualenv = 1
+" }
+
+" isort {
+let g:vim_isort_map = '<C-c>ro'
+let g:vim_isort_python_version = 'python3'
 " }
 
 " vim-go {
@@ -462,13 +468,13 @@ let g:table_mode_corner = '-'
 " }
 
 " neomake {
-autocmd! BufWritePost * Neomake
+call neomake#configure#automake('w')
 let g:neomake_open_list=2
 let g:neomake_list_height=3
 let g:neomake_place_signs=0
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_python_flake8_maker = {
-            \ 'args': ['--ignore', 'E501,E225,E203,F811']}
+            \ 'args': ['--ignore', 'E501,E225,E203,E702,F811']}
 let g:neomake_go_gometalinter_args = ['--deadline=360', '--vendor', '--enable-gc', '--exclude="should have comment or be unexported"']
 
 " identation {

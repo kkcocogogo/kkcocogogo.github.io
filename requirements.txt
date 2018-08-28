@@ -11,3 +11,4 @@ watchdog
 python-language-server[all]
 virtualenv
 virtualenvwrapper
+isort
