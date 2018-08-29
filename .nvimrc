@@ -243,6 +243,7 @@ set nowrap
 
 autocmd FileType cfg set filetype=conf
 autocmd BufRead,BufNewFile *.conf set filetype=dosini
+autocmd BufRead,BufNewFile *.cfg set filetype=dosini
 autocmd BufRead,BufNewFile pip-req.txt set filetype=requirements
 autocmd BufRead,BufNewFile *.geojson set filetype=json
 autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
@@ -471,8 +472,8 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
-let g:ale_echo_msg_format = '%linter%:%code% %s [%severity%]'
-let g:ale_loclist_msg_format = '%linter%:%code% %s [%severity%]'
+let g:ale_echo_msg_format = '%linter%:%code% %s'
+let g:ale_loclist_msg_format = '%linter%:%code% %s'
 let g:ale_linters = {
             \ 'go': ['gometalinter'],
             \ 'python': ['flake8']
