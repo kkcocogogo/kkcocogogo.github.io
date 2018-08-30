@@ -58,9 +58,6 @@ Plug 'tpope/vim-eunuch'
 
 " code edting helper plugin {
 
-" A (Neo)vim plugin for formatting code
-Plug 'sbdchd/neoformat'
-
 " align code
 Plug 'godlygeek/tabular'
 
@@ -215,6 +212,7 @@ set wildignorecase
 set wildmenu
 set wildmode=longest:full,full
 set maxmempattern=2000
+set nonumber
 
 " scrolling {
 set scrolloff=5
@@ -251,6 +249,7 @@ autocmd BufRead,BufNewFile .envrc set filetype=sh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 
+autocmd FileType qf setlocal nonumber
 autocmd FileType man setlocal nonumber wrap
 autocmd FileType python setlocal nonumber nowrap
 autocmd FileType Jenkinsfile setlocal expandtab shiftwidth=4 softtabstop=4
@@ -302,7 +301,7 @@ let g:LanguageClient_serverCommands = {
             \ }
 set signcolumn=no
 let g:LanguageClient_diagnosticsList = "Disabled"
-let g:LanguageClient_diagnosticsList = "Disabled"
+lef g:LanguageClient_diagnosticsEnable = 0
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
 nnoremap <silent> <C-c>rr :call LanguageClient#textDocument_rename()<CR>
@@ -360,6 +359,7 @@ let g:pymode_rope = 1
 let g:pymode_folding = 0
 let g:pymode_rope_goto_definition_bind = '<nop>'
 let g:pymode_rope_organize_imports_bind = '<nop>'
+let g:pymode_rope_rename_bind = '<nop>'
 let g:pymode_rope_ropefolder = '../.ropeproject'
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
@@ -467,6 +467,7 @@ let g:table_mode_corner = '-'
 " }
 
 " ale {
+let g:ale_set_highlights = 0
 let g:ale_open_list = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
@@ -489,7 +490,7 @@ let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
             \ --exclude="Errors unhandled"
             \ --exclude="weak cryptographic"
             \ --exclude="weak random"'
-let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811'
+let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811,F405'
 autocmd BufEnter ControlP let b:ale_enabled = 0
 " }
 
