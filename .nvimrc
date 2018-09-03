@@ -273,7 +273,9 @@ autocmd FileType vue syntax sync fromstart
 
 " ack.vim {
 let g:ackprg = 'ag --nogroup --nocolor --column'
-cnoreabbrev Ack Ack!
+let g:ack_autoclose = 0
+" using location list allows quick navigation using [l and ]l
+cnoreabbrev Ack LAck!
 " }
 
 " golden-ratio {
@@ -301,7 +303,8 @@ let g:LanguageClient_serverCommands = {
             \ }
 set signcolumn=no
 let g:LanguageClient_diagnosticsList = "Disabled"
-lef g:LanguageClient_diagnosticsEnable = 0
+" https://github.com/autozimu/LanguageClient-neovim/issues
+" lef g:LanguageClient_diagnosticsEnable = 0
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
 nnoremap <silent> <C-c>rr :call LanguageClient#textDocument_rename()<CR>
@@ -320,8 +323,9 @@ let g:deoplete#enable_smart_case = 1
 " use tab / shift-tab to cycle through candidates
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-" call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+" call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
+" call deoplete#custom#source('_', 'sorters', [])
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#option('smart_case', v:true)
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
@@ -490,7 +494,7 @@ let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
             \ --exclude="Errors unhandled"
             \ --exclude="weak cryptographic"
             \ --exclude="weak random"'
-let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811,F405'
+let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811,F405,W391'
 autocmd BufEnter ControlP let b:ale_enabled = 0
 " }
 

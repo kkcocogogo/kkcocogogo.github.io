@@ -6,8 +6,7 @@ antigen update
 antigen selfupdate
 pip install -U -r ~/workspace-setup/requirements.txt
 go get -u github.com/nsf/gocode
-go get -u honnef.co/go/tools/cmd/megacheck
-go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
+go get -u github.com/alecthomas/gometalinter
 go get -u github.com/golang/dep/cmd/dep
 go get -u golang.org/x/tools/...
 go get -u github.com/sourcegraph/go-langserver
