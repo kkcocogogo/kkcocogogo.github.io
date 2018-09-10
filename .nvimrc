@@ -484,7 +484,6 @@ let g:ale_linters = {
             \ 'python': ['flake8']
             \ }
 let g:ale_fixers = {
-            \ 'python': ['yapf'],
             \ 'rust': ['rustfmt'],
             \ 'javascript': ['prettier', 'eslint']
             \ }

@@ -17,6 +17,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
 git-extras gitfast
+vagrant
 golang
 fasd brew redis-cli ssh-agent mosh docker httpie
 pip virtualenv virtualenvwrapper pyenv
@@ -65,13 +66,13 @@ DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 # env
 export GOPATH=$HOME/gocode
 export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.virtualenvs/ein/bin"
-if ! type nvim > /dev/null; then
-  export EDITOR=vim
-  alias v='f -e vim'
-else
-  export EDITOR=nvim
-  alias v='f -e nvim'
-fi
+export EDITOR=nvim
+alias v='f -e nvim'
+alias vst="vagrant global-status --prune"
+alias vsh="vagrant ssh"
+alias vd="vagrant destroy -f"
+alias vup="vagrant up"
+alias vupp="vagrant up --provision"
 
 # vi mode
 bindkey -v
@@ -112,7 +113,6 @@ eval "$(direnv hook zsh)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-#Disable autocorrect
 unsetopt correct_all
 unsetopt correct
 DISABLE_CORRECTION="true"
