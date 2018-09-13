@@ -16,7 +16,7 @@ export DISABLE_AUTO_UPDATE="true"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
-git-extras gitfast
+git-extras gitfast gpg-agent
 vagrant
 golang
 fasd brew redis-cli ssh-agent mosh docker httpie
@@ -65,14 +65,16 @@ DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 # env
 export GOPATH=$HOME/gocode
-export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:$HOME/.nvim/plugged/vim-superman/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.virtualenvs/ein/bin"
+export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.virtualenvs/ein/bin"
 export EDITOR=nvim
+export MANPAGER="nvim -c 'set ft=man' -"
 alias v='f -e nvim'
+# vagrant related
 alias vst="vagrant global-status --prune"
 alias vsh="vagrant ssh"
 alias vd="vagrant destroy -f"
-alias vup="vagrant up"
-alias vupp="vagrant up --provision"
+alias vup="VAGRANT_LOG=info vagrant up"
+alias vupp="VAGRANT_LOG=info vagrant up --provision"
 
 # vi mode
 bindkey -v
@@ -99,6 +101,7 @@ setopt correctall
 
 autoload -U promptinit
 promptinit
+alias gfa='git fetch --all --prune && git delete-merged-branches'
 alias gcane='gca! --no-edit'
 alias gcanep='gca! --no-edit && gp -f $1 $2'
 alias gcaanep='ga -A && gca! --no-edit && gp -f $1 $2'
@@ -108,6 +111,7 @@ alias ssh='TERM=xterm ssh'
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git,node_modules,vendor,*.pyc}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--no-mouse"
 
 eval "$(direnv hook zsh)"
 eval "$(pyenv init -)"

@@ -13,9 +13,6 @@ call plug#begin('~/.vim/plugged')
 
 " code navigation and project navigation {
 
-" read man pages in vim
-Plug 'jez/vim-superman'
-
 " file tree, for preview rather than navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'  }
 
@@ -57,9 +54,6 @@ Plug 'tpope/vim-eunuch'
 " }
 
 " code edting helper plugin {
-
-" align code
-Plug 'godlygeek/tabular'
 
 " sql format
 Plug 'mbra/prettysql'
@@ -205,6 +199,7 @@ set lazyredraw
 set visualbell
 set noerrorbells
 set nobackup
+set nowritebackup
 set noswapfile
 set mouse=
 set wildignore+=*/tmp/*,*.so,*.pyc,\.ropeproject
@@ -275,7 +270,7 @@ autocmd FileType vue syntax sync fromstart
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ack_autoclose = 0
 " using location list allows quick navigation using [l and ]l
-cnoreabbrev Ack LAck!
+cnoreabbrev ag LAck!
 " }
 
 " golden-ratio {
@@ -319,7 +314,6 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"
 endfunction
-let g:deoplete#enable_smart_case = 1
 " use tab / shift-tab to cycle through candidates
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
@@ -330,13 +324,13 @@ call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#option('smart_case', v:true)
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
-            \ '_': ['buffer', 'ultisnips'],
-            \ 'python': ['ultisnips', 'LanguageClient', 'buffer'],
-            \ 'go': ['ultisnips', 'go', 'buffer'],
-            \ 'vue': ['ultisnips', 'LanguageClient', 'buffer'],
-            \ 'sh': ['ultisnips', 'buffer', 'LanguageClient'],
-            \ 'lua': ['ultisnips', 'buffer', 'LanguageClient'],
-            \ 'dockerfile': ['ultisnips', 'buffer', 'LanguageClient'],
+            \ '_': ['file', 'around', 'buffer', 'ultisnips'],
+            \ 'python': ['file', 'around', 'ultisnips', 'LanguageClient', 'buffer'],
+            \ 'go': ['file', 'around', 'ultisnips', 'go', 'buffer'],
+            \ 'vue': ['file', 'around', 'ultisnips', 'LanguageClient', 'buffer'],
+            \ 'sh': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
+            \ 'lua': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
+            \ 'dockerfile': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
@@ -476,7 +470,6 @@ let g:ale_open_list = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fix_on_save = 1
 let g:ale_echo_msg_format = '%linter%:%code% %s'
 let g:ale_loclist_msg_format = '%linter%:%code% %s'
 let g:ale_linters = {
@@ -485,6 +478,7 @@ let g:ale_linters = {
             \ }
 let g:ale_fixers = {
             \ 'rust': ['rustfmt'],
+            \ 'python': ['yapf'],
             \ 'javascript': ['prettier', 'eslint']
             \ }
 let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
@@ -493,7 +487,7 @@ let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
             \ --exclude="Errors unhandled"
             \ --exclude="weak cryptographic"
             \ --exclude="weak random"'
-let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811,F405,W391'
+let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811,F405,F403,W391'
 autocmd BufEnter ControlP let b:ale_enabled = 0
 " }
 

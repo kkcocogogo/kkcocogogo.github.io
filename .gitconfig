@@ -1,7 +1,7 @@
 [user]
 	email = kkcocogogo@gmail.com
 	name = timfeirg
-	signingkey = CAF17CF390660A7D
+	signingkey = E0AABAE6842603BA
 [push]
 	default = current
 [url "git@gitlab.ricebook.net:"]
@@ -12,13 +12,7 @@
 	followRedirects = true
 [https]
 	followRedirects = true
-[merge]
-	tool = vimdiff
-[mergetool]
-	prompt = true
-[mergetool "vimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-[difftool]
-	prompt = true
-[diff]
-	tool = vimdiff
+[commit]
+	gpgSign = true
+[gpg]
+	program = gpg
