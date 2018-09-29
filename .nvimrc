@@ -126,15 +126,16 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 
 " special file type handler {
 
-" html / csv
 Plug 'valloric/matchtagalways'
 Plug 'mattn/emmet-vim'
 Plug 'chrisbra/csv.vim'
-
 Plug 'fatih/vim-go'
+Plug 'dart-lang/dart-vim-plugin'
 
 " better python folding
 Plug 'tmhedberg/SimpylFold'
+
+Plug 'lepture/vim-jinja'
 
 " filetypes not handled above will be handled by polyglot
 Plug 'sheerun/vim-polyglot'
@@ -154,6 +155,16 @@ call plug#end()
 " }
 
 " general vim settings {
+
+" nobody uses exmode
+nnoremap Q <Nop>
+
+augroup ClearUndo
+    autocmd!
+    autocmd VimLeave * !rm -rf ~/.nvim/undodir/*
+augroup END
+set undofile
+set undodir=~/.nvim/undodir
 
 let g:python3_host_prog='python3'
 
@@ -243,6 +254,7 @@ autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile .envrc set filetype=sh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm,*.j2 set ft=jinja
 
 autocmd FileType qf setlocal nonumber
 autocmd FileType man setlocal nonumber wrap
@@ -271,6 +283,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ack_autoclose = 0
 " using location list allows quick navigation using [l and ]l
 cnoreabbrev ag LAck!
+let g:ack_mappings = { "h": "h", "s": "<C-W><CR><C-W>K" }
 " }
 
 " golden-ratio {
@@ -281,6 +294,14 @@ let g:golden_ratio_exclude_nonmodifiable = 1
 let g:UltiSnipsExpandTrigger = "<C-l>"
 " }
 
+" auto-pairs {
+au FileType python let b:AutoPairs = AutoPairsDefine({'"""' : '"""', "'''": "'''"})
+au FileType dart let b:AutoPairs = AutoPairsDefine({'<' : '>'})
+au FileType vim let b:AutoPairs = {'<' : '>', '(': ')', "'": "'", '{': '}'}
+" }
+
+" }
+
 " vim-snippets {
 let g:snips_email = 'kkcocogogo@gmail.com'
 let g:snips_author = 'timfeirg'
@@ -288,21 +309,30 @@ let g:snips_github = 'https://github.com/timfeirg/'
 " }
 
 " neovim-LanguageClient {
+let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
+let g:LanguageClient_useVirtualText = 0
+let g:LanguageClient_loadSettings = 1
 let g:LanguageClient_serverCommands = {
+            \ 'dart': ['dart_language_server'],
             \ 'lua': ['lua-lsp'],
             \ 'vue': ['vls'],
             \ 'python': ['pyls'],
             \ 'go': ['go-langserver'],
             \ 'sh': ['bash-language-server', 'start'],
             \ 'dockerfile': ['docker-langserver', '--stdio'],
+            \ 'html': ['html-languageserver', '--stdio'],
+            \ 'css': ['css-languageserver', '--stdio'],
             \ }
 set signcolumn=no
 let g:LanguageClient_diagnosticsList = "Disabled"
-" https://github.com/autozimu/LanguageClient-neovim/issues
 " lef g:LanguageClient_diagnosticsEnable = 0
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
 nnoremap <silent> <C-c>rr :call LanguageClient#textDocument_rename()<CR>
+" }
+
+" better-whitespace {
+let g:show_spaces_that_precede_tabs = 1
 " }
 
 " deoplete {
@@ -321,10 +351,16 @@ call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
 " call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
 " call deoplete#custom#source('_', 'sorters', [])
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-call deoplete#custom#option('smart_case', v:true)
+call deoplete#custom#option({
+            \ 'auto_complete_delay': 1,
+            \ 'auto_refresh_delay': 1,
+            \ 'smart_case': v:true,
+            \ 'on_insert_enter': v:false,
+            \ })
+
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
-            \ '_': ['file', 'around', 'buffer', 'ultisnips'],
+            \ '_': ['file', 'around', 'buffer', 'ultisnips', 'LanguageClient'],
             \ 'python': ['file', 'around', 'ultisnips', 'LanguageClient', 'buffer'],
             \ 'go': ['file', 'around', 'ultisnips', 'go', 'buffer'],
             \ 'vue': ['file', 'around', 'ultisnips', 'LanguageClient', 'buffer'],
@@ -334,7 +370,7 @@ call deoplete#custom#option('sources', {
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " }
 
 " jedi-vim {
@@ -349,6 +385,12 @@ let g:jedi#smart_auto_mappings = 1
 let g:jedi#documentation_command = 'K'
 let g:jedi#auto_close_doc = 1
 let g:jedi#use_splits_not_buffers = 'winwidth'
+" }
+
+" dart {
+let dart_html_in_string=v:true
+let dart_style_guide = 2
+let dart_format_on_save = 1
 " }
 
 " pymode python-mode {
@@ -414,7 +456,7 @@ endfunction
 " NERDtree {
 " the origin T wasn't much use, so I remap both T and t: T for Tree and t for
 " tags looks intuitive to me
-nnoremap T :NERDTreeToggle %<cr>
+nnoremap T :NERDTree %<cr>
 let NERDTreeShowFiles=1
 let NERDTreeRespectWildIgnore=1
 let NERDTreeQuitOnOpen=1
@@ -432,6 +474,7 @@ let g:tcomment_opleader1 = '<leader>c'
 " }
 
 " airline {
+let g:airline#extensions#languageclient#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
 let g:airline_section_b = ''
@@ -464,7 +507,13 @@ let g:table_mode_corner_corner = '-'
 let g:table_mode_corner = '-'
 " }
 
+" fugitive {
+cnoreabbrev gd Gvdiff
+cnoreabbrev gb Gblame
+" }
+
 " ale {
+let g:airline#extensions#ale#enabled = 0
 let g:ale_set_highlights = 0
 let g:ale_open_list = 1
 let g:ale_set_loclist = 0
@@ -479,22 +528,24 @@ let g:ale_linters = {
 let g:ale_fixers = {
             \ 'rust': ['rustfmt'],
             \ 'python': ['yapf'],
+            \ 'html': ['tidy'],
             \ 'javascript': ['prettier', 'eslint']
             \ }
 let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
             \ --exclude="should have comment"
             \ --exclude="should be of the form"
             \ --exclude="Errors unhandled"
+            \ --exclude="stutters"
             \ --exclude="weak cryptographic"
             \ --exclude="weak random"'
-let g:ale_python_flake8_options = '--ignore=E501,E225,E203,E702,F811,F405,F403,W391'
+let g:ale_python_flake8_options = '--ignore=E402,E501,E225,E203,E702,F811,F405,F403,W391,F401,W503,W504'
+let g:ale_python_pylint_options = '--disable=broad-except,logging-not-lazy,too-many-return-statements,C0111,R0903,too-many-arguments,too-many-locals,invalid-name,fixme,logging-fstring-interpolation,line-too-long,no-member,inconsistent-return-statements,too-many-lines,unused-argument,no-self-use'
 autocmd BufEnter ControlP let b:ale_enabled = 0
 " }
 
 " identation {
 set showtabline=0
 set autoindent
-set showmatch
 set linebreak
 set nolist
 set textwidth=0
@@ -571,13 +622,11 @@ set ignorecase
 set smartcase
 set incsearch
 set showmatch
-let g:incsearch#auto_nohlsearch = 1
 map n <Plug>(incsearch-nohl-n)
 map N <Plug>(incsearch-nohl-N)
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)

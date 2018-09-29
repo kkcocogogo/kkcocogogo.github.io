@@ -16,12 +16,11 @@ export DISABLE_AUTO_UPDATE="true"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
-git-extras gitfast gpg-agent
+gitfast git-extras gpg-agent
 vagrant
 golang
-fasd brew redis-cli ssh-agent mosh docker httpie
+fasd brew redis-cli ssh-agent mosh docker
 pip virtualenv virtualenvwrapper pyenv
-helm
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -53,6 +52,8 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
+# smartcase behavior in tab completions, see https://www.reddit.com/r/zsh/comments/4aq8ja/is_it_possible_to_enable_smartcase_tab_completion/
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 antigen bundle zsh-users/zsh-completions
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 antigen apply
@@ -63,18 +64,23 @@ COMPLETION_WAITING_DOTS="true"
 DEFAULT_USER=timfeirg
 DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
-# env
 export GOPATH=$HOME/gocode
-export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/timfeirg/.virtualenvs/ein/bin"
+export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:$HOME/development/flutter/bin:$HOME/.pub-cache/bin"
 export EDITOR=nvim
 export MANPAGER="nvim -c 'set ft=man' -"
 alias v='f -e nvim'
+alias la='exa -alHbg'
 # vagrant related
 alias vst="vagrant global-status --prune"
 alias vsh="vagrant ssh"
 alias vd="vagrant destroy -f"
-alias vup="VAGRANT_LOG=info vagrant up"
-alias vupp="VAGRANT_LOG=info vagrant up --provision"
+alias vup="vagrant up"
+alias vupp="SSH_AUTH_SOCK='' vagrant up --provision"
+
+# edit all files that match this ag search
+function agvi() {
+  ag $@ -l | xargs -o vi
+}
 
 # vi mode
 bindkey -v
@@ -101,6 +107,7 @@ setopt correctall
 
 autoload -U promptinit
 promptinit
+alias gst='git status --show-stash && git rev-list --format=%B --max-count=1 HEAD'
 alias gfa='git fetch --all --prune && git delete-merged-branches'
 alias gcane='gca! --no-edit'
 alias gcanep='gca! --no-edit && gp -f $1 $2'
@@ -124,7 +131,7 @@ DISABLE_CORRECTION="true"
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 # add all ssh keys
-if which keychain > /dev/null; then eval `keychain -q --eval --agents ssh --inherit any id_bitbucket id_github id_gitlab id_japanapi id_sa_ricebook`; fi
+if which keychain > /dev/null; then eval `keychain -q --eval --agents ssh --inherit any id_bitbucket id_github id_gitlab id_sa_ricebook id_ein`; fi
 
 
 # if [[ "$PROFILE_STARTUP" == true ]]; then

@@ -8,7 +8,8 @@ neovim
 pip
 mycli
 watchdog
-python-language-server[all]
+python-language-server[all]==0.22.0
 virtualenv
 virtualenvwrapper
 isort
+devpi-client
