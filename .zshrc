@@ -16,13 +16,14 @@ export DISABLE_AUTO_UPDATE="true"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
-gitfast git-extras gpg-agent
+git gitfast gpg-agent
 vagrant
 golang
 fasd brew redis-cli ssh-agent mosh docker
 pip virtualenv virtualenvwrapper pyenv
 )
 source $ZSH/oh-my-zsh.sh
+source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
 
 source ~/antigen.zsh
 export BULLETTRAIN_STATUS_EXIT_SHOW=true
@@ -65,7 +66,7 @@ DEFAULT_USER=timfeirg
 DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 export GOPATH=$HOME/gocode
-export PATH="$HOME/gocode/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:$HOME/development/flutter/bin:$HOME/.pub-cache/bin"
+export PATH="$GOPATH/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:$HOME/development/flutter/bin:$HOME/.pub-cache/bin"
 export EDITOR=nvim
 export MANPAGER="nvim -c 'set ft=man' -"
 alias v='f -e nvim'
@@ -76,6 +77,8 @@ alias vsh="vagrant ssh"
 alias vd="vagrant destroy -f"
 alias vup="vagrant up"
 alias vupp="SSH_AUTH_SOCK='' vagrant up --provision"
+# ansible related
+alias ave="ansible-vault edit"
 
 # edit all files that match this ag search
 function agvi() {
@@ -88,11 +91,14 @@ bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[[CE' autosuggest-execute
+bindkey '^E' end-of-line
+bindkey '^A' beginning-of-line
 export KEYTIMEOUT=1
 
 # history config
 HISTSIZE=100000
 SAVEHIST=10000000
+setopt menu_complete
 setopt BANG_HIST
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
@@ -107,18 +113,25 @@ setopt correctall
 
 autoload -U promptinit
 promptinit
-alias gst='git status --show-stash && git rev-list --format=%B --max-count=1 HEAD'
-alias gfa='git fetch --all --prune && git delete-merged-branches'
+alias gs='tig status'
+alias gst='git branch --all && grv && git status --show-stash && git rev-list --format=%B --max-count=1 HEAD'
+alias gfa='git fetch --all --tags --prune && git delete-merged-branches'
+alias gcne='gc! --no-edit'
 alias gcane='gca! --no-edit'
 alias gcanep='gca! --no-edit && gp -f $1 $2'
+alias gcnep='gc! --no-edit && gp -f $1 $2'
+alias grhd='git reset HEAD '
+alias gcl='hub clone'
 alias gcaanep='ga -A && gca! --no-edit && gp -f $1 $2'
+alias glt='git log --decorate=full --simplify-by-decoration'
 alias vi=$EDITOR
 alias ssh='TERM=xterm ssh'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git,node_modules,vendor,*.pyc}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS="--no-mouse --inline-info"
+export FZF_CTRL_R_OPTS="--no-mouse --inline-info"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--no-mouse"
 
 eval "$(direnv hook zsh)"
 eval "$(pyenv init -)"

@@ -28,7 +28,7 @@ Plug 'ompugao/ctrlp-history'
 " split pane navigation
 Plug 't9md/vim-choosewin'
 " resize split pane properly
-Plug 'roman/golden-ratio'
+" Plug 'roman/golden-ratio'
 Plug 'szw/vim-maximizer'
 
 " close quickfix window when quit parent window
@@ -76,7 +76,6 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'fisadev/vim-isort'
-Plug 'raimon49/requirements.txt.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 
@@ -131,6 +130,8 @@ Plug 'mattn/emmet-vim'
 Plug 'chrisbra/csv.vim'
 Plug 'fatih/vim-go'
 Plug 'dart-lang/dart-vim-plugin'
+Plug 'scrooloose/vim-slumlord'
+Plug 'aklt/plantuml-syntax'
 
 " better python folding
 Plug 'tmhedberg/SimpylFold'
@@ -148,7 +149,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 " }
 
 call plug#end()
@@ -197,6 +198,9 @@ autocmd BufLeave,FocusLost * silent! wall
 noremap <C-q> :wqa<CR>
 " handy sudo
 cmap w!! w !sudo tee % >/dev/null
+" write and then git add
+cmap gw Gwrite \| q
+cmap gn Gwrite \| n
 
 set inccommand=split
 set gdefault
@@ -213,6 +217,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set mouse=
+set wildoptions=pum
 set wildignore+=*/tmp/*,*.so,*.pyc,\.ropeproject
 set wildignorecase
 set wildmenu
@@ -234,12 +239,8 @@ set fillchars=eob:\ ,vert:\
 set splitbelow
 set splitright
 set background=dark
-
-colorscheme solarized
-" hide tildes
-hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
-highlight Comment cterm=italic
-" make tilde sign darker
+set termguicolors
+colorscheme solarized8
 " }
 
 " filetype handling {
@@ -248,7 +249,7 @@ set nowrap
 autocmd FileType cfg set filetype=conf
 autocmd BufRead,BufNewFile *.conf set filetype=dosini
 autocmd BufRead,BufNewFile *.cfg set filetype=dosini
-autocmd BufRead,BufNewFile pip-req.txt set filetype=requirements
+autocmd BufRead,BufNewFile requirements*.txt set filetype=requirements
 autocmd BufRead,BufNewFile *.geojson set filetype=json
 autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile .envrc set filetype=sh
@@ -256,10 +257,14 @@ autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm,*.j2 set ft=jinja
 
+autocmd FileType yaml setlocal indentkeys-=<:>
+autocmd FileType requirements setlocal commentstring=#\ %s
+autocmd FileType dockerfile setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType qf setlocal nonumber
 autocmd FileType man setlocal nonumber wrap
 autocmd FileType python setlocal nonumber nowrap
 autocmd FileType Jenkinsfile setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType jinja setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType json setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vue setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType html setlocal expandtab shiftwidth=2 softtabstop=2
@@ -296,7 +301,6 @@ let g:UltiSnipsExpandTrigger = "<C-l>"
 
 " auto-pairs {
 au FileType python let b:AutoPairs = AutoPairsDefine({'"""' : '"""', "'''": "'''"})
-au FileType dart let b:AutoPairs = AutoPairsDefine({'<' : '>'})
 au FileType vim let b:AutoPairs = {'<' : '>', '(': ')', "'": "'", '{': '}'}
 " }
 
@@ -313,7 +317,7 @@ let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_loadSettings = 1
 let g:LanguageClient_serverCommands = {
-            \ 'dart': ['dart_language_server'],
+            \ 'dart': ['dart', '/usr/local/opt/dart/libexec/bin/snapshots/analysis_server.dart.snapshot', '--lsp'],
             \ 'lua': ['lua-lsp'],
             \ 'vue': ['vls'],
             \ 'python': ['pyls'],
@@ -379,12 +383,12 @@ let g:jedi#goto_command = '<C-c>g'
 let g:jedi#goto_definitions_command = ''  " dynamically done for ft=python.
 let g:jedi#use_tabs_not_buffers = 0  " current default is 1.
 let g:jedi#rename_command = '<C-c>rr'
-let g:jedi#usages_command = '<Leader>gu'
 let g:jedi#completions_enabled = 0
-let g:jedi#smart_auto_mappings = 1
+let g:jedi#smart_auto_mappings = 0
 let g:jedi#documentation_command = 'K'
 let g:jedi#auto_close_doc = 1
 let g:jedi#use_splits_not_buffers = 'winwidth'
+let g:jedi#auto_initialization = 0
 " }
 
 " dart {
@@ -473,6 +477,10 @@ let g:NERDTreeMapOpenVSplit='v'
 let g:tcomment_opleader1 = '<leader>c'
 " }
 
+" vim-polyglot {
+let g:polyglot_disabled = ['yaml']
+" }
+
 " airline {
 let g:airline#extensions#languageclient#enabled = 0
 let g:airline_powerline_fonts = 1
@@ -521,24 +529,19 @@ let g:ale_set_quickfix = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_echo_msg_format = '%linter%:%code% %s'
 let g:ale_loclist_msg_format = '%linter%:%code% %s'
+let g:ale_go_go111module = 'ON'
 let g:ale_linters = {
-            \ 'go': ['gometalinter'],
+            \ 'go': ['golangci-lint'],
             \ 'python': ['flake8']
             \ }
 let g:ale_fixers = {
             \ 'rust': ['rustfmt'],
-            \ 'python': ['yapf'],
+            \ 'python': ['black'],
             \ 'html': ['tidy'],
             \ 'javascript': ['prettier', 'eslint']
             \ }
-let g:ale_go_gometalinter_options = '--vendor --fast --disable=gocyclo
-            \ --exclude="should have comment"
-            \ --exclude="should be of the form"
-            \ --exclude="Errors unhandled"
-            \ --exclude="stutters"
-            \ --exclude="weak cryptographic"
-            \ --exclude="weak random"'
-let g:ale_python_flake8_options = '--ignore=E402,E501,E225,E203,E702,F811,F405,F403,W391,F401,W503,W504'
+let g:ale_python_black_options = '--skip-string-normalization'
+let g:ale_python_flake8_options = '--ignore=E402,E501,E722,E731,E225,E203,E702,F811,F405,F403,W391,F401,W503,W504'
 let g:ale_python_pylint_options = '--disable=broad-except,logging-not-lazy,too-many-return-statements,C0111,R0903,too-many-arguments,too-many-locals,invalid-name,fixme,logging-fstring-interpolation,line-too-long,no-member,inconsistent-return-statements,too-many-lines,unused-argument,no-self-use'
 autocmd BufEnter ControlP let b:ale_enabled = 0
 " }

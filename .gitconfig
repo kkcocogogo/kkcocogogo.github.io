@@ -4,8 +4,7 @@
 	signingkey = E0AABAE6842603BA
 [push]
 	default = current
-[url "git@gitlab.ricebook.net:"]
-	insteadOf = https://gitlab.ricebook.net/
+	followTags = true
 [http "https://gopkg.in"]
 	followRedirects = true
 [http]
@@ -17,8 +16,9 @@
 [gpg]
 	program = gpg
 [pager]
-	diff = diff-so-fancy | less -i --tabs=1,5 -RFX
-	show = diff-so-fancy | less -i --tabs=1,5 -RFX
+	diff = diff-so-fancy | less -i --tabs=4 -RFX
+	show = diff-so-fancy | less -i --tabs=4 -RFX
+	branch = false
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52

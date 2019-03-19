@@ -1,15 +1,18 @@
 #-i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 -i https://pypi.doubanio.com/simple/
+requests
+black
 pygments
 sqlparse
 httpie
 flake8
 neovim
 pip
+pip-tools
 mycli
 watchdog
-python-language-server[all]==0.22.0
+#python-language-server[all]==0.22.0
+python-language-server[all]
 virtualenv
 virtualenvwrapper
 isort
-devpi-client
