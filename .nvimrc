@@ -136,8 +136,6 @@ Plug 'aklt/plantuml-syntax'
 " better python folding
 Plug 'tmhedberg/SimpylFold'
 
-Plug 'lepture/vim-jinja'
-
 " filetypes not handled above will be handled by polyglot
 Plug 'sheerun/vim-polyglot'
 
@@ -255,16 +253,16 @@ autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile .envrc set filetype=sh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
-au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm,*.j2 set ft=jinja
+au BufNewFile,BufRead *.html.j2 set ft=html
+au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
 
-autocmd FileType yaml setlocal indentkeys-=<:>
+autocmd FileType yaml setlocal indentkeys-=<:> expandtab shiftwidth=2 softtabstop=2
 autocmd FileType requirements setlocal commentstring=#\ %s
 autocmd FileType dockerfile setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType qf setlocal nonumber
 autocmd FileType man setlocal nonumber wrap
 autocmd FileType python setlocal nonumber nowrap
 autocmd FileType Jenkinsfile setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType jinja setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType json setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vue setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType html setlocal expandtab shiftwidth=2 softtabstop=2
@@ -478,7 +476,9 @@ let g:tcomment_opleader1 = '<leader>c'
 " }
 
 " vim-polyglot {
-let g:polyglot_disabled = ['yaml']
+let g:polyglot_disabled = ['yaml', 'jinja']
+" ansible-vim indentexpr is buggy!
+autocmd FileType yaml.ansible setlocal indentexpr=
 " }
 
 " airline {
