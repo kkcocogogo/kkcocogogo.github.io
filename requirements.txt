@@ -16,3 +16,4 @@ python-language-server[all]
 virtualenv
 virtualenvwrapper
 isort
+devpi-client

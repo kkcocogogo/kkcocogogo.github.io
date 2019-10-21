@@ -117,10 +117,6 @@ Plug 'mileszs/ack.vim'
 " star key to search in visual mode, z* for hold
 Plug 'haya14busa/vim-asterisk'
 
-" highlight search when using '/'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-
 " }
 
 " special file type handler {
@@ -137,6 +133,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'tmhedberg/SimpylFold'
 
 " filetypes not handled above will be handled by polyglot
+let g:polyglot_disabled = ['yaml', 'jinja', 'helm']
 Plug 'sheerun/vim-polyglot'
 
 " }
@@ -222,6 +219,11 @@ set wildmenu
 set wildmode=longest:full,full
 set maxmempattern=2000
 set nonumber
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
 
 " scrolling {
 set scrolloff=5
@@ -253,9 +255,11 @@ autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile .envrc set filetype=sh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
-au BufNewFile,BufRead *.html.j2 set ft=html
-au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
+autocmd BufNewFile,BufRead *.html.j2 set ft=html
+autocmd BufNewFile,BufRead *.yml.j2 set ft=yaml
+autocmd BufNewFile,BufRead *.yaml.j2 set ft=yaml
 
+autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType yaml setlocal indentkeys-=<:> expandtab shiftwidth=2 softtabstop=2
 autocmd FileType requirements setlocal commentstring=#\ %s
 autocmd FileType dockerfile setlocal expandtab shiftwidth=4 softtabstop=4
@@ -266,6 +270,8 @@ autocmd FileType Jenkinsfile setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType json setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vue setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType html setlocal expandtab shiftwidth=2 softtabstop=2
+autocmd FileType nginx setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType markdown setlocal wrap
 autocmd FileType ruby setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType xml setlocal shiftwidth=2
 autocmd FileType htmldjango setlocal expandtab shiftwidth=2 softtabstop=2
@@ -311,6 +317,7 @@ let g:snips_github = 'https://github.com/timfeirg/'
 " }
 
 " neovim-LanguageClient {
+set completeopt-=preview
 let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_loadSettings = 1
@@ -476,7 +483,6 @@ let g:tcomment_opleader1 = '<leader>c'
 " }
 
 " vim-polyglot {
-let g:polyglot_disabled = ['yaml', 'jinja']
 " ansible-vim indentexpr is buggy!
 autocmd FileType yaml.ansible setlocal indentexpr=
 " }
@@ -562,6 +568,7 @@ map - <Plug>(choosewin)
 
 " vim-maximizer {
 nnoremap <leader>- :MaximizerToggle<CR>
+let g:maximizer_restore_on_winleave = 1
 " }
 
 " ctrlp and plugins {
@@ -617,22 +624,6 @@ map gz# <Plug>(asterisk-gz#)
 
 " vim csv {
 let g:csv_highlight_column = 'y'
-" }
-
-" incsearch {
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-set showmatch
-map n <Plug>(incsearch-nohl-n)
-map N <Plug>(incsearch-nohl-N)
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
 " }
 
 " }

@@ -21,6 +21,7 @@ vagrant
 golang
 fasd brew redis-cli ssh-agent mosh docker
 pip virtualenv virtualenvwrapper pyenv
+kubectl
 )
 source $ZSH/oh-my-zsh.sh
 source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
@@ -79,6 +80,8 @@ alias vup="vagrant up"
 alias vupp="SSH_AUTH_SOCK='' vagrant up --provision"
 # ansible related
 alias ave="ansible-vault edit"
+# remove some aliases
+unalias sd
 
 # edit all files that match this ag search
 function agvi() {
