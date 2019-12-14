@@ -70,6 +70,7 @@ export GOPATH=$HOME/gocode
 export PATH="$GOPATH/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:$HOME/development/flutter/bin:$HOME/.pub-cache/bin"
 export EDITOR=nvim
 export MANPAGER="nvim -c 'set ft=man' -"
+alias d='gd'
 alias v='f -e nvim'
 alias la='exa -alHbg'
 # vagrant related
@@ -122,6 +123,7 @@ alias gfa='git fetch --all --tags --prune && git delete-merged-branches'
 alias gcne='gc! --no-edit'
 alias gcane='gca! --no-edit'
 alias gcanep='gca! --no-edit && gp -f $1 $2'
+alias gcls='gcl --depth 1 '
 alias gcnep='gc! --no-edit && gp -f $1 $2'
 alias grhd='git reset HEAD '
 alias gcl='hub clone'

@@ -152,6 +152,8 @@ call plug#end()
 
 " general vim settings {
 
+set t_BE=
+
 " nobody uses exmode
 nnoremap Q <Nop>
 
@@ -232,7 +234,6 @@ set backspace=indent,eol,start
 
 " vim user interface {
 highlight NonText ctermfg=0
-set termencoding=utf-8
 set fillchars=eob:\ ,vert:\ 
 " Open new split panes to right and bottom, which feels more natural than
 " Vim’s default
@@ -258,8 +259,14 @@ autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 autocmd BufNewFile,BufRead *.html.j2 set ft=html
 autocmd BufNewFile,BufRead *.yml.j2 set ft=yaml
 autocmd BufNewFile,BufRead *.yaml.j2 set ft=yaml
+autocmd BufNewFile,BufRead *.yml.tmpl set ft=yaml
+autocmd BufNewFile,BufRead *.yaml.tmpl set ft=yaml
+autocmd BufNewFile,BufRead *.service.j2 set ft=systemd
 
+autocmd FileType systemd setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
+autocmd FileType cpp setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType yaml setlocal indentkeys-=<:> expandtab shiftwidth=2 softtabstop=2
 autocmd FileType requirements setlocal commentstring=#\ %s
 autocmd FileType dockerfile setlocal expandtab shiftwidth=4 softtabstop=4
@@ -331,6 +338,8 @@ let g:LanguageClient_serverCommands = {
             \ 'dockerfile': ['docker-langserver', '--stdio'],
             \ 'html': ['html-languageserver', '--stdio'],
             \ 'css': ['css-languageserver', '--stdio'],
+            \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+            \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
             \ }
 set signcolumn=no
 let g:LanguageClient_diagnosticsList = "Disabled"
@@ -376,6 +385,8 @@ call deoplete#custom#option('sources', {
             \ 'sh': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
             \ 'lua': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
             \ 'dockerfile': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
+            \ 'cpp': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
+            \ 'c': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/

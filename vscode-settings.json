@@ -33,5 +33,7 @@
     "window.zoomLevel": 0,
     "editor.minimap.enabled": false,
     "python.linting.enabled": false,
-    "update.showReleaseNotes": false
+    "update.showReleaseNotes": false,
+    "editor.fontFamily": "'PragmataPro Mono Liga', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true
 }
