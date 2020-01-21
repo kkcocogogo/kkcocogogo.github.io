@@ -13,5 +13,6 @@ then
 else
   sudo pkill EasyConnect
   sudo launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist
+  sudo launchctl remove com.sangfor.ECAgentProxy
   echo "everything's fine now"
 fi

@@ -16,15 +16,24 @@ export DISABLE_AUTO_UPDATE="true"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export ZSH=$HOME/.oh-my-zsh
 plugins=(
-git gitfast gpg-agent
-vagrant
-golang
-fasd brew redis-cli ssh-agent mosh docker
-pip virtualenv virtualenvwrapper pyenv
+git
+gitfast
+gpg-agent
+# vagrant
+# golang
+fasd
+redis-cli
+ssh-agent
+mosh
+# docker
+# pip
+virtualenv
+virtualenvwrapper
+pyenv
 kubectl
 )
 source $ZSH/oh-my-zsh.sh
-source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+# source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
 
 source ~/antigen.zsh
 export BULLETTRAIN_STATUS_EXIT_SHOW=true
@@ -157,6 +166,3 @@ if which keychain > /dev/null; then eval `keychain -q --eval --agents ssh --inhe
 #   unsetopt xtrace
 #   exec 2>&3 3>&-
 # fi
-
-# added by travis gem
-[ -f /Users/timfeirg/.travis/travis.sh ] && source /Users/timfeirg/.travis/travis.sh

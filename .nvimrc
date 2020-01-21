@@ -308,6 +308,7 @@ let g:golden_ratio_exclude_nonmodifiable = 1
 
 " ultisnips {
 let g:UltiSnipsExpandTrigger = "<C-l>"
+" let g:UltiSnipsSnippetDirectories = ['/Users/timfeirg/workspace-setup']
 " }
 
 " auto-pairs {
@@ -324,7 +325,11 @@ let g:snips_github = 'https://github.com/timfeirg/'
 " }
 
 " neovim-LanguageClient {
+let $LANGUAGECLIENT_DEBUG=1
+let g:LanguageClient_loggingLevel='DEBUG'
+let g:LanguageClient_autoStart=1
 set completeopt-=preview
+let g:LanguageClient_serverStderr = '/tmp/LanguageServer.log'
 let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_loadSettings = 1

@@ -4,7 +4,6 @@ requests
 black
 pygments
 sqlparse
-httpie
 flake8
 neovim
 pip
@@ -17,3 +16,4 @@ virtualenv
 virtualenvwrapper
 isort
 devpi-client
+ansible
