@@ -1,7 +1,7 @@
 source ~/workspace-setup/fanqiang.sh
 vi -c "PlugUpdate | PlugUpgrade | qa"
-bubu
-brew reinstall neovim
+brew update && brew upgrade && brew cleanup -s
+# brew reinstall neovim
 upgrade_oh_my_zsh
 antigen update
 antigen selfupdate

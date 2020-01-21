@@ -1,5 +1,5 @@
-#-i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
--i https://pypi.doubanio.com/simple/
+-i https://mirrors.aliyun.com/pypi/simple/
+# -i https://pypi.doubanio.com/simple/
 requests
 black
 pygments

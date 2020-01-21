@@ -65,12 +65,10 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'chrisbra/NrrwRgn'
 
 " deoplete and its friends
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
+Plug 'neovim/nvim-lsp'
 " Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete-lsp'
 Plug 'Shougo/context_filetype.vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'davidhalter/jedi-vim'
@@ -103,9 +101,6 @@ Plug 'tomtom/tcomment_vim'
 
 " table mode, useful when drawing tables
 Plug 'dhruvasagar/vim-table-mode'
-
-" async syntax checker
-Plug 'w0rp/ale'
 
 " }
 
@@ -262,6 +257,7 @@ autocmd BufNewFile,BufRead *.yaml.j2 set ft=yaml
 autocmd BufNewFile,BufRead *.yml.tmpl set ft=yaml
 autocmd BufNewFile,BufRead *.yaml.tmpl set ft=yaml
 autocmd BufNewFile,BufRead *.service.j2 set ft=systemd
+autocmd BufNewFile,BufRead *.dockerfile set ft=dockerfile
 
 autocmd FileType systemd setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
@@ -324,38 +320,38 @@ let g:snips_author = 'timfeirg'
 let g:snips_github = 'https://github.com/timfeirg/'
 " }
 
-" neovim-LanguageClient {
-let $LANGUAGECLIENT_DEBUG=1
-let g:LanguageClient_loggingLevel='DEBUG'
-let g:LanguageClient_autoStart=1
-set completeopt-=preview
-let g:LanguageClient_serverStderr = '/tmp/LanguageServer.log'
-let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
-let g:LanguageClient_useVirtualText = 0
-let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_serverCommands = {
-            \ 'dart': ['dart', '/usr/local/opt/dart/libexec/bin/snapshots/analysis_server.dart.snapshot', '--lsp'],
-            \ 'lua': ['lua-lsp'],
-            \ 'vue': ['vls'],
-            \ 'python': ['pyls'],
-            \ 'go': ['go-langserver'],
-            \ 'sh': ['bash-language-server', 'start'],
-            \ 'dockerfile': ['docker-langserver', '--stdio'],
-            \ 'html': ['html-languageserver', '--stdio'],
-            \ 'css': ['css-languageserver', '--stdio'],
-            \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-            \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-            \ }
-set signcolumn=no
-let g:LanguageClient_diagnosticsList = "Disabled"
-" lef g:LanguageClient_diagnosticsEnable = 0
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
-nnoremap <silent> <C-c>rr :call LanguageClient#textDocument_rename()<CR>
-" }
-
 " better-whitespace {
 let g:show_spaces_that_precede_tabs = 1
+" }
+
+" nvim-lsp {
+nnoremap <silent> gd <cmd>vsplit <bar> lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gp <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+
+" https://github.com/neovim/nvim-lsp#pyls
+" https://www.xgithub.com/2019/11/14/neovim-nvim-lsp-common-configurations-for-neovim-language-servers/
+lua << EOF
+local nvim_lsp = require'nvim_lsp'
+nvim_lsp.pyls.setup{
+  settings = {
+    pyls = {
+      plugins = {
+        pycodestyle = {
+          enabled = false
+        }
+      },
+      rope = {
+        ropeFolder = {'.'}
+      }
+    }
+  }
+}
+EOF
+
 " }
 
 " deoplete {
@@ -383,15 +379,15 @@ call deoplete#custom#option({
 
 " see https://muunyblue.github.io/520bae6649b42ff5a3c8c58b7fcfc5a9.html
 call deoplete#custom#option('sources', {
-            \ '_': ['file', 'around', 'buffer', 'ultisnips', 'LanguageClient'],
-            \ 'python': ['file', 'around', 'ultisnips', 'LanguageClient', 'buffer'],
+            \ '_': ['file', 'around', 'buffer', 'ultisnips', 'lsp'],
+            \ 'python': ['file', 'around', 'ultisnips', 'lsp', 'buffer'],
             \ 'go': ['file', 'around', 'ultisnips', 'go', 'buffer'],
-            \ 'vue': ['file', 'around', 'ultisnips', 'LanguageClient', 'buffer'],
-            \ 'sh': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
-            \ 'lua': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
-            \ 'dockerfile': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
-            \ 'cpp': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
-            \ 'c': ['file', 'around', 'ultisnips', 'buffer', 'LanguageClient'],
+            \ 'vue': ['file', 'around', 'ultisnips', 'lsp', 'buffer'],
+            \ 'sh': ['file', 'around', 'ultisnips', 'buffer', 'lsp'],
+            \ 'lua': ['file', 'around', 'ultisnips', 'buffer', 'lsp'],
+            \ 'dockerfile': ['file', 'around', 'ultisnips', 'buffer', 'lsp'],
+            \ 'cpp': ['file', 'around', 'ultisnips', 'buffer', 'lsp'],
+            \ 'c': ['file', 'around', 'ultisnips', 'buffer', 'lsp'],
             \})
 " automatically close the scratch window
 " see https://gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
@@ -540,32 +536,6 @@ let g:table_mode_corner = '-'
 " fugitive {
 cnoreabbrev gd Gvdiff
 cnoreabbrev gb Gblame
-" }
-
-" ale {
-let g:airline#extensions#ale#enabled = 0
-let g:ale_set_highlights = 0
-let g:ale_open_list = 1
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_echo_msg_format = '%linter%:%code% %s'
-let g:ale_loclist_msg_format = '%linter%:%code% %s'
-let g:ale_go_go111module = 'ON'
-let g:ale_linters = {
-            \ 'go': ['golangci-lint'],
-            \ 'python': ['flake8']
-            \ }
-let g:ale_fixers = {
-            \ 'rust': ['rustfmt'],
-            \ 'python': ['black'],
-            \ 'html': ['tidy'],
-            \ 'javascript': ['prettier', 'eslint']
-            \ }
-let g:ale_python_black_options = '--skip-string-normalization'
-let g:ale_python_flake8_options = '--ignore=E402,E501,E722,E731,E225,E203,E702,F811,F405,F403,W391,F401,W503,W504'
-let g:ale_python_pylint_options = '--disable=broad-except,logging-not-lazy,too-many-return-statements,C0111,R0903,too-many-arguments,too-many-locals,invalid-name,fixme,logging-fstring-interpolation,line-too-long,no-member,inconsistent-return-statements,too-many-lines,unused-argument,no-self-use'
-autocmd BufEnter ControlP let b:ale_enabled = 0
 " }
 
 " identation {
