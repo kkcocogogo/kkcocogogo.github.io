@@ -12,8 +12,11 @@ mycli
 watchdog
 #python-language-server[all]==0.22.0
 python-language-server[all]
+pylint
+pycodestyle
 virtualenv
 virtualenvwrapper
 isort
 devpi-client
 ansible
+msgpack

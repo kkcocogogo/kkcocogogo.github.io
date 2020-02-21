@@ -46,6 +46,7 @@ Plug 'terryma/vim-multiple-cursors'
 
 " git integration, :Gvdiff command is extremely useful
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
 " Enables :Gbrowse from fugitive.vim to open GitHub URLs.
 Plug 'tpope/vim-rhubarb'
 " unix helpers like SudoEdit, Delete
@@ -191,8 +192,10 @@ noremap <C-q> :wqa<CR>
 " handy sudo
 cmap w!! w !sudo tee % >/dev/null
 " write and then git add
-cmap gw Gwrite \| q
-cmap gn Gwrite \| n
+" cmap gw Gwrite \| q
+" cmap gn Gwrite \| n
+cnoreabbrev gw Gwrite \| n
+cnoreabbrev gn Gwrite \| n
 
 set inccommand=split
 set gdefault
@@ -249,6 +252,7 @@ autocmd BufRead,BufNewFile requirements*.txt set filetype=requirements
 autocmd BufRead,BufNewFile *.geojson set filetype=json
 autocmd BufRead,BufNewFile *.zsh-theme set filetype=zsh
 autocmd BufRead,BufNewFile .envrc set filetype=sh
+autocmd BufNewFile,BufRead *.sh.j2 set ft=sh
 autocmd BufRead,BufNewFile *.hql set filetype=hive expandtab
 autocmd BufRead,BufNewFile *.q set filetype=hive expandtab
 autocmd BufNewFile,BufRead *.html.j2 set ft=html
@@ -258,6 +262,7 @@ autocmd BufNewFile,BufRead *.yml.tmpl set ft=yaml
 autocmd BufNewFile,BufRead *.yaml.tmpl set ft=yaml
 autocmd BufNewFile,BufRead *.service.j2 set ft=systemd
 autocmd BufNewFile,BufRead *.dockerfile set ft=dockerfile
+autocmd BufNewFile,BufRead *ockerfile.j2 set ft=dockerfile
 
 autocmd FileType systemd setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
@@ -325,12 +330,14 @@ let g:show_spaces_that_precede_tabs = 1
 " }
 
 " nvim-lsp {
+set scl=no
 nnoremap <silent> gd <cmd>vsplit <bar> lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gp <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <C-c>rr <cmd>lua vim.lsp.buf.rename()<CR>
 
 " https://github.com/neovim/nvim-lsp#pyls
 " https://www.xgithub.com/2019/11/14/neovim-nvim-lsp-common-configurations-for-neovim-language-servers/
@@ -340,8 +347,16 @@ nvim_lsp.pyls.setup{
   settings = {
     pyls = {
       plugins = {
+        pylint = {
+          enabled = true,
+          args = {'--disable=wildcard-import,too-many-public-methods,redefined-outer-name,expression-not-assigned,redefined-builtin,subprocess-run-check,too-many-instance-attributes,import-outside-toplevel,broad-except,logging-not-lazy,too-many-return-statements,C0111,R0903,too-many-arguments,multiple-statements,too-many-statements,too-many-locals,invalid-name,fixme,logging-fstring-interpolation,line-too-long,no-member,inconsistent-return-statements,too-many-lines,unused-argument,no-self-use'},
+        },
         pycodestyle = {
-          enabled = false
+          enabled = true,
+          ignore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291'},
+        },
+        pyflakes = {
+          enabled = false,
         }
       },
       rope = {
@@ -350,8 +365,8 @@ nvim_lsp.pyls.setup{
     }
   }
 }
+require'nvim_lsp'.gopls.setup{}
 EOF
-
 " }
 
 " deoplete {
@@ -399,7 +414,6 @@ let g:jedi#auto_vim_configuration = 0
 let g:jedi#goto_command = '<C-c>g'
 let g:jedi#goto_definitions_command = ''  " dynamically done for ft=python.
 let g:jedi#use_tabs_not_buffers = 0  " current default is 1.
-let g:jedi#rename_command = '<C-c>rr'
 let g:jedi#completions_enabled = 0
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#documentation_command = 'K'
@@ -536,6 +550,7 @@ let g:table_mode_corner = '-'
 " fugitive {
 cnoreabbrev gd Gvdiff
 cnoreabbrev gb Gblame
+let g:fugitive_gitlab_domains = ['https://git.ein.plus']
 " }
 
 " identation {
@@ -555,6 +570,10 @@ map - <Plug>(choosewin)
 " vim-maximizer {
 nnoremap <leader>- :MaximizerToggle<CR>
 let g:maximizer_restore_on_winleave = 1
+" }
+
+" vim-qf {
+let g:qf_shorten_path = 0
 " }
 
 " ctrlp and plugins {

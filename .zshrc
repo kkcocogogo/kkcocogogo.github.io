@@ -24,9 +24,9 @@ gpg-agent
 fasd
 redis-cli
 ssh-agent
-mosh
-# docker
-# pip
+# mosh
+docker
+pip
 virtualenv
 virtualenvwrapper
 pyenv
@@ -83,11 +83,11 @@ alias d='gd'
 alias v='f -e nvim'
 alias la='exa -alHbg'
 # vagrant related
-alias vst="vagrant global-status --prune"
-alias vsh="vagrant ssh"
-alias vd="vagrant destroy -f"
-alias vup="vagrant up"
-alias vupp="SSH_AUTH_SOCK='' vagrant up --provision"
+# alias vst="vagrant global-status --prune"
+# alias vsh="vagrant ssh"
+# alias vd="vagrant destroy -f"
+# alias vup="vagrant up"
+# alias vupp="SSH_AUTH_SOCK='' vagrant up --provision"
 # ansible related
 alias ave="ansible-vault edit"
 # remove some aliases
