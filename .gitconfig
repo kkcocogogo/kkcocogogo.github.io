@@ -9,6 +9,7 @@
 	followRedirects = true
 [http]
 	followRedirects = true
+	version = HTTP/1.1
 [https]
 	followRedirects = true
 [commit]
@@ -16,24 +17,22 @@
 [gpg]
 	program = gpg
 [pager]
-	diff = diff-so-fancy | less -i --tabs=4 -RFX
-	show = diff-so-fancy | less -i --tabs=4 -RFX
 	branch = false
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = yellow
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
 [color]
 	ui = true
 [hub]
 	protocol = https
 [url "https://github.com/"]
 	insteadOf = git@github.com:
+[credential "https://swca.aisino.com"]
+	username = ein-plus
+[core]
+    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+
+[interactive]
+    diffFilter = delta --color-only
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f

@@ -349,11 +349,13 @@ nvim_lsp.pyls.setup{
       plugins = {
         pylint = {
           enabled = true,
-          args = {'--disable=wildcard-import,too-many-public-methods,redefined-outer-name,expression-not-assigned,redefined-builtin,subprocess-run-check,too-many-instance-attributes,import-outside-toplevel,broad-except,logging-not-lazy,too-many-return-statements,C0111,R0903,too-many-arguments,multiple-statements,too-many-statements,too-many-locals,invalid-name,fixme,logging-fstring-interpolation,line-too-long,no-member,inconsistent-return-statements,too-many-lines,unused-argument,no-self-use'},
+          args = {'--disable=bare-except,wildcard-import,too-many-public-methods,redefined-outer-name,expression-not-assigned,redefined-builtin,subprocess-run-check,too-many-instance-attributes,import-outside-toplevel,broad-except,logging-not-lazy,too-many-return-statements,C0111,R0903,too-many-arguments,multiple-statements,too-many-statements,too-many-locals,invalid-name,fixme,logging-fstring-interpolation,line-too-long,no-member,inconsistent-return-statements,too-many-lines,unused-argument,no-self-use'},
         },
         pycodestyle = {
           enabled = true,
           ignore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291'},
+          addIgnore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291'},
+          maxLineLength = 200,
         },
         pyflakes = {
           enabled = false,
@@ -371,9 +373,7 @@ EOF
 
 " deoplete {
 let g:deoplete#enable_at_startup = 1
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
+call deoplete#custom#var('omni', 'input_patterns', {})
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"

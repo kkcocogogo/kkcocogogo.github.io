@@ -18,6 +18,7 @@ export ZSH=$HOME/.oh-my-zsh
 plugins=(
 git
 gitfast
+git-extras
 gpg-agent
 # vagrant
 # golang
@@ -47,6 +48,8 @@ dir
 virtualenv
 git
 )
+
+export BULLETTRAIN_CUSTOM_MSG='$(greadlink -f ~/.kube/config | xargs basename | cut -d- -f2)'
 export BULLETTRAIN_PROMPT_CHAR=""
 export BULLETTRAIN_GIT_BG=green
 export BULLETTRAIN_TIME_BG=cyan
@@ -76,12 +79,12 @@ DEFAULT_USER=timfeirg
 DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 export GOPATH=$HOME/gocode
-export PATH="$GOPATH/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:$HOME/development/flutter/bin:$HOME/.pub-cache/bin"
+export PATH="$GOPATH/bin:$HOME/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"
 export EDITOR=nvim
 export MANPAGER="nvim -c 'set ft=man' -"
-alias d='gd'
 alias v='f -e nvim'
-alias la='exa -alHbg'
+alias la='exa -alHbg --sort newest'
+alias l='exa -alHbg --sort newest'
 # vagrant related
 # alias vst="vagrant global-status --prune"
 # alias vsh="vagrant ssh"
@@ -90,6 +93,9 @@ alias la='exa -alHbg'
 # alias vupp="SSH_AUTH_SOCK='' vagrant up --provision"
 # ansible related
 alias ave="ansible-vault edit"
+alias feature='git-feature'
+alias bug='git-feature -a bug'
+alias refactor='git-feature -a refactor'
 # remove some aliases
 unalias sd
 

@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Braver's Solarized Dark (themed workbench)",
+    "workbench.colorTheme": "Braver's Solarized Light (themed workbench)",
     "vim.enableNeovim": true,
     "vim.neovimPath": "nvim",
     "vim.easymotion": true,
@@ -35,5 +35,7 @@
     "python.linting.enabled": false,
     "update.showReleaseNotes": false,
     "editor.fontFamily": "'PragmataPro Mono Liga', Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "markdown-pdf.executablePath": "/Applications/Google Chrome.app",
+    "markdown.preview.fontFamily": "'PingFang SC', 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif"
 }
