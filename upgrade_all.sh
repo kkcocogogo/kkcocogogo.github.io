@@ -1,4 +1,5 @@
 source ~/workspace-setup/fanqiang.sh
+helm repo update
 vi -c "PlugUpdate | PlugUpgrade | qa"
 brew update && brew upgrade && brew cleanup -s
 brew reinstall neovim

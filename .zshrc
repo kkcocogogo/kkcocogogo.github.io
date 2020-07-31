@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # profile zshrc from https://gist.github.com/mwilliammyers/54edf992399e794f7ffe
 # uncomment head and tail when in need
 
@@ -37,30 +44,30 @@ source $ZSH/oh-my-zsh.sh
 # source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
 
 source ~/antigen.zsh
-export BULLETTRAIN_STATUS_EXIT_SHOW=true
-export BULLETTRAIN_PROMPT_ORDER=(
-time
-status
-proxy
-custom
-context
-dir
-virtualenv
-git
-)
-
-export BULLETTRAIN_CUSTOM_MSG='$(greadlink -f ~/.kube/config | xargs basename | cut -d- -f2)'
-export BULLETTRAIN_PROMPT_CHAR=""
-export BULLETTRAIN_GIT_BG=green
-export BULLETTRAIN_TIME_BG=cyan
-export BULLETTRAIN_STATUS_ERROR_BG=red
-export BULLETTRAIN_STATUS_ERROR_FG=red
-export BULLETTRAIN_DIR_FG=black
-export BULLETTRAIN_CONTEXT_DEFAULT_USER=timfeirg
-export BULLETTRAIN_GIT_COLORIZE_DIRTY=true
-if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
-  export BULLETTRAIN_IS_SSH_CLIENT=true
-fi
+# export BULLETTRAIN_STATUS_EXIT_SHOW=true
+# export BULLETTRAIN_PROMPT_ORDER=(
+# time
+# status
+# proxy
+# custom
+# context
+# dir
+# virtualenv
+# git
+# )
+#
+# export BULLETTRAIN_CUSTOM_MSG='$(greadlink -f ~/.kube/config | xargs basename | cut -d- -f2)'
+# export BULLETTRAIN_PROMPT_CHAR=""
+# export BULLETTRAIN_GIT_BG=green
+# export BULLETTRAIN_TIME_BG=cyan
+# export BULLETTRAIN_STATUS_ERROR_BG=red
+# export BULLETTRAIN_STATUS_ERROR_FG=red
+# export BULLETTRAIN_DIR_FG=black
+# export BULLETTRAIN_CONTEXT_DEFAULT_USER=timfeirg
+# export BULLETTRAIN_GIT_COLORIZE_DIRTY=true
+# if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
+#   export BULLETTRAIN_IS_SSH_CLIENT=true
+# fi
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
@@ -69,7 +76,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 # smartcase behavior in tab completions, see https://www.reddit.com/r/zsh/comments/4aq8ja/is_it_possible_to_enable_smartcase_tab_completion/
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 antigen bundle zsh-users/zsh-completions
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+antigen theme https://github.com/romkatv/powerlevel10k powerlevel10k
 antigen apply
 
 COMPLETION_WAITING_DOTS="true"
@@ -172,3 +179,6 @@ if which keychain > /dev/null; then eval `keychain -q --eval --agents ssh --inhe
 #   unsetopt xtrace
 #   exec 2>&3 3>&-
 # fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
