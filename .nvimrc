@@ -191,11 +191,8 @@ autocmd BufLeave,FocusLost * silent! wall
 noremap <C-q> :wqa<CR>
 " handy sudo
 cmap w!! w !sudo tee % >/dev/null
-" write and then git add
-" cmap gw Gwrite \| q
-" cmap gn Gwrite \| n
-cnoreabbrev gw Gwrite \| n
 cnoreabbrev gn Gwrite \| n
+noremap <C-g> :Gwq<CR>
 
 set inccommand=split
 set gdefault
@@ -264,6 +261,7 @@ autocmd BufNewFile,BufRead *.service.j2 set ft=systemd
 autocmd BufNewFile,BufRead *.dockerfile set ft=dockerfile
 autocmd BufNewFile,BufRead *ockerfile.j2 set ft=dockerfile
 
+autocmd FileType applescript setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType systemd setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType cpp setlocal expandtab shiftwidth=4 softtabstop=4

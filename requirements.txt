@@ -17,3 +17,4 @@ isort
 devpi-client
 ansible
 msgpack
+pre-commit

@@ -68,6 +68,7 @@ source ~/antigen.zsh
 # if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
 #   export BULLETTRAIN_IS_SSH_CLIENT=true
 # fi
+export ZLE_RPROMPT_INDENT=0
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
