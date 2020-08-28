@@ -72,7 +72,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-lsp'
 Plug 'Shougo/context_filetype.vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'fisadev/vim-isort'
 Plug 'vim-ruby/vim-ruby'
