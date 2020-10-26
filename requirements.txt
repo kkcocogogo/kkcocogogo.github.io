@@ -8,13 +8,12 @@ flake8
 neovim
 pip
 pip-tools
-watchdog
 python-language-server[all]
 pycodestyle
 virtualenv
 virtualenvwrapper
 isort
 devpi-client
-ansible
 msgpack
 pre-commit
+mypy

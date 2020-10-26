@@ -93,6 +93,9 @@ export MANPAGER="nvim -c 'set ft=man' -"
 alias v='f -e nvim'
 alias la='exa -alHbg --sort newest'
 alias l='exa -alHbg --sort newest'
+alias mtr='sudo mtr'
+alias ktp='kubectl top pod'
+
 # vagrant related
 # alias vst="vagrant global-status --prune"
 # alias vsh="vagrant ssh"
@@ -110,6 +113,23 @@ unalias sd
 # edit all files that match this ag search
 function agvi() {
   ag $@ -l | xargs -o vi
+}
+
+function hag() {
+	helm list --all | ag $@
+}
+
+function hdag() {
+	helm list --all | ag $@ | awk '{print $1}' | xargs helm delete
+}
+
+function gpswca() {
+	local repo_name=$(basename `git rev-parse --show-toplevel`)
+	git remote remove swca || true
+	git fetch --all --tags --prune && git delete-merged-branches
+	git remote add swca https://swca.aisino.com/aisino-ein-aics/$repo_name
+	git push -f swca --all
+	git push -f swca --tags
 }
 
 # vi mode

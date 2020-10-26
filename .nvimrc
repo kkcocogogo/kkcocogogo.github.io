@@ -9,7 +9,7 @@ endif
 " }
 
 " vim-plug plugins {
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.nvim/plugged')
 
 " code navigation and project navigation {
 
@@ -67,6 +67,7 @@ Plug 'chrisbra/NrrwRgn'
 
 " deoplete and its friends
 Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 " Plug 'nixprime/cpsm', { 'do': 'PY3=ON ./install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-lsp'
@@ -127,6 +128,7 @@ Plug 'aklt/plantuml-syntax'
 
 " better python folding
 Plug 'tmhedberg/SimpylFold'
+Plug 'Konfekt/FastFold'
 
 " filetypes not handled above will be handled by polyglot
 let g:polyglot_disabled = ['yaml', 'jinja', 'helm']
@@ -262,6 +264,7 @@ autocmd BufNewFile,BufRead *.dockerfile set ft=dockerfile
 autocmd BufNewFile,BufRead *ockerfile.j2 set ft=dockerfile
 
 autocmd FileType applescript setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType sh setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType systemd setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType cpp setlocal expandtab shiftwidth=4 softtabstop=4
@@ -277,7 +280,7 @@ autocmd FileType json setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType vue setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType html setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType nginx setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType markdown setlocal wrap
+autocmd FileType markdown setlocal wrap expandtab shiftwidth=4 softtabstop=4
 autocmd FileType ruby setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType xml setlocal shiftwidth=2
 autocmd FileType htmldjango setlocal expandtab shiftwidth=2 softtabstop=2
@@ -340,7 +343,7 @@ nnoremap <silent> <C-c>rr <cmd>lua vim.lsp.buf.rename()<CR>
 " https://github.com/neovim/nvim-lsp#pyls
 " https://www.xgithub.com/2019/11/14/neovim-nvim-lsp-common-configurations-for-neovim-language-servers/
 lua << EOF
-local nvim_lsp = require'nvim_lsp'
+local nvim_lsp = require'lspconfig'
 nvim_lsp.pyls.setup{
   settings = {
     pyls = {
@@ -351,8 +354,8 @@ nvim_lsp.pyls.setup{
         },
         pycodestyle = {
           enabled = true,
-          ignore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291'},
-          addIgnore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291'},
+          ignore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291', 'E741'},
+          addIgnore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291', 'E741'},
           maxLineLength = 200,
         },
         pyflakes = {
@@ -365,7 +368,7 @@ nvim_lsp.pyls.setup{
     }
   }
 }
-require'nvim_lsp'.gopls.setup{}
+require'lspconfig'.gopls.setup{}
 EOF
 " }
 
@@ -548,7 +551,7 @@ let g:table_mode_corner = '-'
 " fugitive {
 cnoreabbrev gd Gvdiff
 cnoreabbrev gb Gblame
-let g:fugitive_gitlab_domains = ['https://git.ein.plus']
+let g:fugitive_gitlab_domains = ['https://git.ein.plus', 'https://git.ysdev.xyz']
 " }
 
 " identation {

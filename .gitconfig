@@ -26,6 +26,8 @@
 	insteadOf = git@github.com:
 [credential "https://swca.aisino.com"]
 	username = ein-plus
+[credential "https://git.test.ysdev.xyz"]
+	username = ci
 [core]
     pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
 
