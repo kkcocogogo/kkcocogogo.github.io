@@ -353,11 +353,10 @@ nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> <C-c>rr <cmd>lua vim.lsp.buf.rename()<CR>
 
-" https://github.com/neovim/nvim-lsp#pyls
+" https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
 " https://www.xgithub.com/2019/11/14/neovim-nvim-lsp-common-configurations-for-neovim-language-servers/
 lua << EOF
-local nvim_lsp = require'lspconfig'
-nvim_lsp.pyls.setup{
+require'lspconfig'.pyls.setup{
   settings = {
     pyls = {
       plugins = {
@@ -368,7 +367,6 @@ nvim_lsp.pyls.setup{
         pycodestyle = {
           enabled = true,
           ignore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291', 'E741'},
-          addIgnore = {'E402', 'E501', 'E722', 'E731', 'E225', 'E203', 'E702', 'F811', 'F405', 'F403', 'W391', 'F401', 'W503', 'W504', 'W291', 'E741'},
           maxLineLength = 200,
         },
         pyflakes = {
@@ -506,6 +504,7 @@ endfunction
 " the origin T wasn't much use, so I remap both T and t: T for Tree and t for
 " tags looks intuitive to me
 nnoremap T :NERDTree %<cr>
+let NERDTreeShowHidden=1
 let NERDTreeShowFiles=1
 let NERDTreeRespectWildIgnore=1
 let NERDTreeQuitOnOpen=1

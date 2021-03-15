@@ -6,7 +6,7 @@ brew reinstall neovim
 omz update
 antigen update
 antigen selfupdate
-pip install -U -r ~/workspace-setup/requirements.txt
+pip install -U -r ~/workspace-setup/requirements.in
 # go get -u github.com/nsf/gocode
 # go get -u github.com/sourcegraph/go-langserver
 # npm update --force -g bash-language-server

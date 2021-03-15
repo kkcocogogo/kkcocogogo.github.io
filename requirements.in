@@ -1,15 +1,14 @@
--i https://mirrors.aliyun.com/pypi/simple/
-# -i https://pypi.doubanio.com/simple/
+-i https://mirrors.cloud.tencent.com/pypi/simple/
+watchdog
+argh
 requests
 black
 pygments
 sqlparse
-flake8
 neovim
 pip
 pip-tools
 python-language-server[all]
-pycodestyle
 virtualenv
 virtualenvwrapper
 isort

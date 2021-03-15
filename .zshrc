@@ -37,37 +37,15 @@ docker
 pip
 virtualenv
 virtualenvwrapper
-pyenv
+# pyenv
 kubectl
 )
 source $ZSH/oh-my-zsh.sh
-# source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 
 source ~/antigen.zsh
-# export BULLETTRAIN_STATUS_EXIT_SHOW=true
-# export BULLETTRAIN_PROMPT_ORDER=(
-# time
-# status
-# proxy
-# custom
-# context
-# dir
-# virtualenv
-# git
-# )
-#
-# export BULLETTRAIN_CUSTOM_MSG='$(greadlink -f ~/.kube/config | xargs basename | cut -d- -f2)'
-# export BULLETTRAIN_PROMPT_CHAR=""
-# export BULLETTRAIN_GIT_BG=green
-# export BULLETTRAIN_TIME_BG=cyan
-# export BULLETTRAIN_STATUS_ERROR_BG=red
-# export BULLETTRAIN_STATUS_ERROR_FG=red
-# export BULLETTRAIN_DIR_FG=black
-# export BULLETTRAIN_CONTEXT_DEFAULT_USER=timfeirg
-# export BULLETTRAIN_GIT_COLORIZE_DIRTY=true
-# if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
-#   export BULLETTRAIN_IS_SSH_CLIENT=true
-# fi
+
 export ZLE_RPROMPT_INDENT=0
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
@@ -182,8 +160,6 @@ export FZF_CTRL_R_OPTS="--no-mouse --inline-info"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(direnv hook zsh)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 unsetopt correct_all
 unsetopt correct

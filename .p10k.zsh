@@ -35,6 +35,7 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
+    background_jobs
     # =========================[ Line #2 ]=========================
     newline                 # \n
   )
@@ -74,10 +75,10 @@
     phpenv                  # php version from phpenv (https://github.com/phpenv/phpenv)
     haskell_stack           # haskell version from stack (https://haskellstack.org/)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
-    terraform               # terraform workspace (https://www.terraform.io)
-    aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-    aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
-    azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
+    # terraform               # terraform workspace (https://www.terraform.io)
+    # aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+    # aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
+    # azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
     gcloud                  # google cloud cli account and project (https://cloud.google.com/)
     google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
     context                 # user@hostname
@@ -93,15 +94,15 @@
     # disk_usage            # disk usage
     # ram                   # free RAM
     # swap                  # used swap
-    todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
-    timewarrior             # timewarrior tracking status (https://timewarrior.net/)
-    taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
+    # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
+    # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
+    # taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     time                    # current time
+    proxy                 # system-wide http/https/ftp proxy
     # =========================[ Line #2 ]=========================
     newline
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
-    # proxy                 # system-wide http/https/ftp proxy
     # battery               # internal battery
     # wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
@@ -1234,7 +1235,7 @@
   #############[ kubecontext: current kubernetes context (https://kubernetes.io/) ]#############
   # Show kubecontext only when the the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show kubecontext.
-  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|lain'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|lain|stern'
 
   # Kubernetes context classes for the purpose of using different colors, icons and expansions with
   # different contexts.
@@ -1630,7 +1631,7 @@
   #   - always:   Trim down prompt when accepting a command line.
   #   - same-dir: Trim down prompt when accepting a command line unless this is the first command
   #               typed after changing current working directory.
-  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
 
   # Instant prompt mode.
   #

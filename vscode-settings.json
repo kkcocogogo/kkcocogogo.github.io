@@ -30,12 +30,21 @@
         }
     ],
     "vim.leader": ",",
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.minimap.enabled": false,
     "python.linting.enabled": false,
     "update.showReleaseNotes": false,
     "editor.fontFamily": "'PragmataPro Mono Liga', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
     "markdown-pdf.executablePath": "/Applications/Google Chrome.app",
-    "markdown.preview.fontFamily": "'PingFang SC', 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif"
+    "markdown.preview.fontFamily": "'PingFang SC', 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+    "editor.wordWrapColumn": 50,
+    "editor.wrappingStrategy": "advanced",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "editor.wordWrap": "on"
 }
